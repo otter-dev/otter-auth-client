@@ -1,6 +1,6 @@
-use std::path::{PathBuf, Path};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use serde_json::json;
+use std::path::{Path, PathBuf};
 
 use crate::error::Error;
 
@@ -34,11 +34,11 @@ fn get_config_dir() -> Result<PathBuf> {
 
 pub fn save_config(auth_config: &GithubAuthConfig) -> Result<()> {
     let config_dir = get_config_dir()?;
-    println!("{:?}", &config_dir);
     std::fs::create_dir_all(&config_dir)?;
     let auth_json = serde_json::to_string(auth_config)?;
     let file_path = config_dir.join("auth.json");
     std::fs::write(file_path, auth_json)?;
+    println!("Auth config saved to {:?}", &config_dir);
     Ok(())
 }
 
@@ -56,4 +56,3 @@ pub struct GithubAuthConfig {
     pub expires_in: u64,
     pub interval: u64,
 }
-

@@ -18,4 +18,3 @@ pub enum Error {
     #[error(transparent)]
     PathError(#[from] core::convert::Infallible),
 }
-
